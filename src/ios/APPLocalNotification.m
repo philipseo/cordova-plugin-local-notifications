@@ -866,11 +866,18 @@
 {
     UILocalNotification* notification = [localNotification object];
 
+    NSString* event = @"";
+    if([[self applicationState] isEqualToString:@"foreground"])
+        event = @"trigger";
+    else
+        event = @"click";
+
     if ([notification userInfo] == NULL || [notification wasUpdated])
         return;
 
-    NSTimeInterval timeInterval = [notification timeIntervalSinceLastTrigger];
-    NSString* event = timeInterval < 0.2 && deviceready ? @"trigger" : @"click";
+// doesn't worked.
+//    NSTimeInterval timeInterval = [notification timeIntervalSinceLastTrigger];
+//    NSString* event = timeInterval < 0.2 && deviceready ? @"trigger" : @"click";
 
     [self fireEvent:event localnotification:notification];
 
