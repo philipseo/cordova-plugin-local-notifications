@@ -956,7 +956,11 @@
     if (deviceready) {
         [self.commandDelegate evalJs:js];
     } else {
-        [self.eventQueue addObject:js];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.commandDelegate evalJs:js];
+            // doesn't work
+            // [self.eventQueue addObject:js];
+        });
     }
 }
 
